@@ -78,7 +78,7 @@ class CoverityApiService {
             const queryParameters = {
                 params: {
                     // locale: 'en_us',
-                    offset,
+                    offset: offset,
                     // rowCount: limit,
                     includeColumnLabels: 'true',
                     // queryType: 'bySnapshot',
