@@ -51,7 +51,6 @@ class CoverityApiService {
         });
     }
     findIssues(projectName, offset, limit) {
-        var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const requestBody = {
                 filters: [
@@ -90,7 +89,7 @@ class CoverityApiService {
                 (0, core_1.debug)(`Coverity response error: ${response.result}`);
                 return Promise.reject(`Failed to retrieve issues from Coverity for project '${projectName}': ${response.statusCode}`);
             }
-            console.log((_a = response.result) === null || _a === void 0 ? void 0 : _a.totalRows);
+            console.log(response.result);
             return Promise.resolve(response.result);
         });
     }
