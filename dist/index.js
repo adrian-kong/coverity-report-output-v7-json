@@ -51,6 +51,7 @@ class CoverityApiService {
         });
     }
     findIssues(projectName, offset, limit) {
+        var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const requestBody = {
                 filters: [
@@ -66,16 +67,22 @@ class CoverityApiService {
                         ]
                     }
                 ],
+                snapshotScope: {
+                    show: {
+                        scope: "first()..last()",
+                        includeOutdatedSnapshots: true
+                    },
+                },
                 columns: [exports.KEY_CID, exports.KEY_MERGE_KEY, exports.KEY_ACTION, exports.KEY_CLASSIFICATION, exports.KEY_FIRST_SNAPSHOT_ID, exports.KEY_LAST_SNAPSHOT_ID]
             };
             const queryParameters = {
                 params: {
-                    locale: 'en_us',
+                    // locale: 'en_us',
                     offset,
-                    rowCount: limit,
+                    // rowCount: limit,
                     includeColumnLabels: 'true',
-                    queryType: 'bySnapshot',
-                    sortOrder: 'asc'
+                    // queryType: 'bySnapshot',
+                    // sortOrder: 'asc'
                 }
             };
             const response = yield this.restClient.create('/api/v2/issues/search', requestBody, { queryParameters });
@@ -83,6 +90,7 @@ class CoverityApiService {
                 (0, core_1.debug)(`Coverity response error: ${response.result}`);
                 return Promise.reject(`Failed to retrieve issues from Coverity for project '${projectName}': ${response.statusCode}`);
             }
+            console.log((_a = response.result) === null || _a === void 0 ? void 0 : _a.totalRows);
             return Promise.resolve(response.result);
         });
     }
@@ -107,7 +115,6 @@ exports.cleanUrl = cleanUrl;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.relativizePath = exports.getPullRequestNumber = exports.getSha = exports.isPullRequest = void 0;
 const github_1 = __nccwpck_require__(5438);
-const core_1 = __nccwpck_require__(2186);
 const prEvents = ['pull_request', 'pull_request_review', 'pull_request_review_comment'];
 function isPullRequest() {
     return prEvents.includes(github_1.context.eventName);
@@ -142,7 +149,6 @@ function relativizePath(path) {
     if (path.startsWith("/__w")) {
         path = "/home/runner/work" + path.substring("/__w".length);
     }
-    (0, core_1.info)(path.substring(length + 1));
     return path.substring(length + 1);
 }
 exports.relativizePath = relativizePath;
