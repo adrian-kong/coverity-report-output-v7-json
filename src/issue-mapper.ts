@@ -2,7 +2,7 @@ import {debug, info} from '@actions/core'
 import {CoverityApiService, IIssuesSearchResponse, IResponseCell, KEY_ACTION, KEY_CID, KEY_CLASSIFICATION, KEY_FIRST_SNAPSHOT_ID, KEY_LAST_SNAPSHOT_ID, KEY_MERGE_KEY} from './coverity-api'
 import {COVERITY_URL, COVERITY_USERNAME, COVERITY_PASSWORD, COVERITY_PROJECT_NAME} from './inputs'
 
-const PAGE_SIZE = 500
+const PAGE_SIZE = 200
 
 export class ProjectIssue {
   cid: string

@@ -85,23 +85,30 @@ export class CoverityApiService {
           ]
         }
       ],
+        snapshotScope: {
+          show: {
+              scope: "first()..last()",
+              includeOutdatedSnapshots: true
+          },
+        },
       columns: [KEY_CID, KEY_MERGE_KEY, KEY_ACTION, KEY_CLASSIFICATION, KEY_FIRST_SNAPSHOT_ID, KEY_LAST_SNAPSHOT_ID]
     }
     const queryParameters: IRequestQueryParams = {
       params: {
-        locale: 'en_us',
-        offset,
-        rowCount: limit,
+        // locale: 'en_us',
+        offset: offset,
+        // rowCount: limit,
         includeColumnLabels: 'true',
-        queryType: 'bySnapshot',
-        sortOrder: 'asc'
+        // queryType: 'bySnapshot',
+        // sortOrder: 'asc'
       }
     }
-    const response = await this.restClient.create<IIssuesSearchResponse>('/api/v2/issues/search', requestBody, {queryParameters})
+    const response = await this.restClient.create<IIssuesSearchResponse>(`/api/v2/issues/search?includeColumnLabels=true&offset=${offset}`, requestBody)
     if (response.statusCode < 200 || response.statusCode >= 300) {
       debug(`Coverity response error: ${response.result}`)
       return Promise.reject(`Failed to retrieve issues from Coverity for project '${projectName}': ${response.statusCode}`)
     }
+    console.log(offset + " " + response.result?.offset);
     return Promise.resolve(response.result as IIssuesSearchResponse)
   }
 }
