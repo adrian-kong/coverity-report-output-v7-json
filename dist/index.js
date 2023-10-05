@@ -317,7 +317,7 @@ exports.mapMatchingMergeKeys = exports.ProjectIssue = void 0;
 const core_1 = __nccwpck_require__(2186);
 const coverity_api_1 = __nccwpck_require__(3777);
 const inputs_1 = __nccwpck_require__(6180);
-const PAGE_SIZE = 500;
+const PAGE_SIZE = 200;
 class ProjectIssue {
     constructor(cid, mergeKey, action, classification, firstSnapshotId, lastSnapshotId) {
         this.cid = cid;
